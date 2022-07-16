@@ -97,8 +97,6 @@ struct Simulator {
             // Boot again
             Simulator.shutdown(simulatorName: simulatorName)
             Simulator.boot(simulatorName: simulatorName)
-            
-            Simulator.setStatusBarPhoneWithHomeButton(simulatorName: simulatorName)
         }
     }
 }
