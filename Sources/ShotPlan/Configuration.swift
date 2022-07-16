@@ -7,13 +7,16 @@
 
 import Foundation
 
-struct Configuration: Codable {
-    let scheme: String
-    let testPlan: String
-    let devices: [Device]
+extension ShotPlan {
+    struct Configuration: Codable {
+        let scheme: String
+        let testPlan: String
+        let devices: [Device]
+        let localizeSimulator: Bool
+    }
 }
 
-extension Configuration {
+extension ShotPlan.Configuration {
     static let defaultFileName: String = "ShotPlan.json"
     static let defaultSchemeName: String = "YOUR_SCHEME"
     static let defaultTestPlan: String = "YOUR_TESTPLAN"
@@ -25,12 +28,12 @@ extension Configuration {
     ]
     
     static func defaultConfiguration(schemeName: String?, testPlan: String?) -> Self {
-        return .init(scheme: schemeName ?? defaultSchemeName,
+        return Self(scheme: schemeName ?? defaultSchemeName,
                      testPlan: testPlan ?? defaultTestPlan,
-                     devices: defaultDevices)
+                    devices: defaultDevices, localizeSimulator: true)
     }
     
-    var encodedData: Data {
+    var data: Data {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.outputFormatting = .prettyPrinted
         guard let encodedData = try? jsonEncoder.encode(self) else { fatalError() }
@@ -38,7 +41,7 @@ extension Configuration {
     }
 }
 
-extension Configuration {
+extension ShotPlan.Configuration {
     static var configurationFileURL: URL {
         return Project.currentDirectoryURL.appendingPathComponent(defaultFileName)
     }
@@ -47,16 +50,11 @@ extension Configuration {
         return Project.fileManager.fileExists(atPath: configurationFileURL.path)
     }
     
-    static func createDefaultConfiguration(schemeName: String?, testPlan: String?) {
-        save(contents: defaultConfiguration(schemeName: schemeName, testPlan: testPlan).encodedData)
-    }
-    
     static func save(contents: Data) {
         Project.fileManager.createFile(atPath: configurationFileURL.path, contents: contents)
     }
     
     static func load() throws -> Self {
-        let jsonDecoder = JSONDecoder()
-        return try jsonDecoder.decode(self, from: Data(contentsOf: configurationFileURL))
+        return try JSONDecoder().decode(self, from: Data(contentsOf: configurationFileURL))
     }
 }

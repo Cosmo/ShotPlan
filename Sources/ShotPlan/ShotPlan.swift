@@ -5,26 +5,10 @@ import ArgumentParser
 struct ShotPlan: ParsableCommand {
     static var configuration = CommandConfiguration(
         abstract: "A utility creating automated screenshots with Xcode Test Plans.",
-        subcommands: [Init.self, Run.self],
+        subcommands: [Init.self, Run.self, Debug.self],
         defaultSubcommand: Run.self)
     
     mutating func run() {
-    }
-}
-
-struct Project {
-    static let fileManager = FileManager()
-    
-    static var currentDirectoryURL: URL {
-        return URL(fileURLWithPath: fileManager.currentDirectoryPath)
-    }
-    
-    static var targetDirectoryURL: URL {
-        return currentDirectoryURL.appendingPathComponent("Screenshots", isDirectory: true)
-    }
-    
-    static var derivedDataDirectoryURL: URL {
-        return fileManager.temporaryDirectory.appendingPathComponent("ShotPlan-DerivedData", isDirectory: true)
     }
 }
 
@@ -53,7 +37,12 @@ extension ShotPlan {
             
             let devices = configurationFromFile?.devices ?? Configuration.defaultDevices
             
-            let configuration = Configuration(scheme: schemeName, testPlan: testPlan, devices: devices)
+            guard let localizeSimulator = configurationFromFile?.localizeSimulator else {
+                print("\(Configuration.defaultSchemeName) not found. Create a configuration by running 'shotplan init'")
+                return
+            }
+            
+            let configuration = Configuration(scheme: schemeName, testPlan: testPlan, devices: devices, localizeSimulator: localizeSimulator)
             let targetFolder = Project.targetDirectoryURL.relativePath
             let derivedDataPath = Project.derivedDataDirectoryURL.relativePath
             
@@ -99,7 +88,10 @@ extension ShotPlan {
         mutating func run() {
             print("Creating default configuration …")
             
-            Configuration.createDefaultConfiguration(schemeName: schemeName, testPlan: testPlan)
+            let defaultConfiguration = Configuration.defaultConfiguration(
+                schemeName: schemeName,
+                testPlan: testPlan)
+            Configuration.save(contents: defaultConfiguration.data)
             
             if Configuration.exists {
                 print("\(Configuration.defaultFileName) created.")
@@ -109,3 +101,13 @@ extension ShotPlan {
     }
 }
 
+
+extension ShotPlan {
+    struct Debug: ParsableCommand {
+        static var configuration = CommandConfiguration(abstract: "Debug.")
+        
+        mutating func run() {
+            
+        }
+    }
+}
