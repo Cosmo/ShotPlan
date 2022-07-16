@@ -9,11 +9,15 @@ import Foundation
 
 struct Device: Codable {
     let simulatorName: String
-    let idiom: Idiom?
     let displaySize: String?
     let homeStyle: HomeStyle?
+    var idiom: Idiom? {
+        return Idiom.allCases.first { idiom in
+            simulatorName.contains(idiom.description)
+        }
+    }
     
-    enum Idiom: String, Codable, CustomStringConvertible {
+    enum Idiom: String, CaseIterable, Codable, CustomStringConvertible {
         case tablet
         case phone
         case watch

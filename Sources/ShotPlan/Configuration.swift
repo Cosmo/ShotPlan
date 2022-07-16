@@ -18,10 +18,10 @@ extension Configuration {
     static let defaultSchemeName: String = "YOUR_SCHEME"
     static let defaultTestPlan: String = "YOUR_TESTPLAN"
     static let defaultDevices: [Device] = [
-        Device(simulatorName: "iPhone 11 Pro Max", idiom: .phone, displaySize: "6.5", homeStyle: .indicator),
-        Device(simulatorName: "iPhone 8 Plus", idiom: .phone, displaySize: "5.5", homeStyle: .button),
-        Device(simulatorName: "iPad Pro (12.9-inch) (5th generation)", idiom: .tablet, displaySize: "12.9", homeStyle: .indicator),
-        // Device(simulatorName: "iPad Pro (12.9-inch) (2th generation)", idiom: .tablet, displaySize: "12.9", homeStyle: .button),
+        Device(simulatorName: "iPhone 11 Pro Max", displaySize: "6.5", homeStyle: .indicator),
+        Device(simulatorName: "iPhone 8 Plus", displaySize: "5.5", homeStyle: .button),
+        Device(simulatorName: "iPad Pro (12.9-inch) (5th generation)", displaySize: "12.9", homeStyle: .indicator),
+        // Device(simulatorName: "iPad Pro (12.9-inch) (2th generation)", displaySize: "12.9", homeStyle: .button),
     ]
     
     static func defaultConfiguration(schemeName: String?, testPlan: String?) -> Self {
