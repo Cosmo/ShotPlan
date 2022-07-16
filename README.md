@@ -7,7 +7,7 @@ A command line tool that calls your Xcode Test Plan and creates screenshots of y
 ### [Mint](https://github.com/yonaskolb/mint)
 
 ```sh
-mint install git@github.com:Cosmo/ShotPlan.git@main
+mint install Cosmo/ShotPlan@main
 ```
 
 ## Configuration
