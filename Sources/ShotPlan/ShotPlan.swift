@@ -53,8 +53,6 @@ extension ShotPlan {
             
             let devices = configurationFromFile?.devices ?? Configuration.defaultDevices
             
-            // ?? Configuration.defaultConfiguration(schemeName: Configuration.defaultSchemeName, testPlan: Configuration.defaultTestPlan)
-            
             let configuration = Configuration(scheme: schemeName, testPlan: testPlan, devices: devices)
             let targetFolder = Project.targetDirectoryURL.relativePath
             let derivedDataPath = Project.derivedDataDirectoryURL.relativePath
@@ -105,7 +103,7 @@ extension ShotPlan {
             
             if Configuration.exists {
                 print("\(Configuration.defaultFileName) created.")
-                print("Call the 'run' command to start creating screenshots.")
+                print("Call 'shotplan run' command to start creating screenshots.")
             }
         }
     }
