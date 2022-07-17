@@ -24,7 +24,8 @@ struct Shell {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)!
         
-        print(output)
+        print("$ \(command)")
+        // print(output)
         
         return output
     }
