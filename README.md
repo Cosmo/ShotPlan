@@ -12,7 +12,7 @@ mint install Cosmo/ShotPlan@main
 
 ## Configuration
 
-Change to your Xcode project and run the `shotplan init` command to create a new configuration file.
+Change to your Xcode project directory and run the `shotplan init` command to create a new configuration file.
 Don't forget to replace the placeholders `YOUR_SCHEME` and `YOUR_TESTPLAN`.
 
 ```sh
@@ -53,4 +53,4 @@ Run the following command:
 shotplan run
 ```
 
-ShotPlan will create a `Screenshots` directory in your project.
+ShotPlan will create a `Screenshots` directory in your project with all the screenshots of the devices in your configuration and the screens in your Test Plan.
