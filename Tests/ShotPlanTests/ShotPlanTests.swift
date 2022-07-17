@@ -29,7 +29,7 @@ final class ShotPlanTests: XCTestCase {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)
 
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertEqual(output, "Call 'shotplan run' command to start creating screenshots.\n")
         #endif
     }
 
