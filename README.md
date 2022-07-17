@@ -2,6 +2,9 @@
 
 A command line tool that calls your Xcode Test Plan and creates screenshots of your app automatically.
 
+ShotPlan will also take care of the status bar in your screenshots.
+
+
 ## Installation
 
 ### [Mint](https://github.com/yonaskolb/mint)
