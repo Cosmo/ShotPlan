@@ -55,7 +55,7 @@ extension ShotPlan {
                 print("Simulator started.")
                 
                 print("Setting Status Bar …")
-                Simulator.setStatusBar(device: device)
+                Simulator.setStatusBar(device: device, timeZone: timeZone)
                 print("Status Bar set.")
                 
                 print("Deleting Derived Data …")

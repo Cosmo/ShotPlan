@@ -8,8 +8,8 @@
 import Foundation
 
 struct Simulator {
-    static var defaultDate: Date {
-        let timeZone = TimeZone(identifier: "America/Los_Angeles") ?? .current
+    static func defaultDate(timeZone: String) -> Date {
+        let timeZone = TimeZone(identifier: timeZone) ?? .current
         let dateComponents = DateComponents(
             calendar: Calendar.current,
             timeZone: timeZone,
@@ -26,21 +26,21 @@ struct Simulator {
         return importantDate
     }
     
-    static var defaultDateString: String {
-        defaultDate.ISO8601Format()
+    static func defaultDateString(timeZone: String) -> String {
+        defaultDate(timeZone: timeZone).ISO8601Format()
     }
     
-    static func setStatusBar(device: Device) {
+    static func setStatusBar(device: Device, timeZone: String) {
         clearStatusBar(simulatorName: device.simulatorName)
         switch device.idiom {
         case .tablet:
-            setStatusBarPad(simulatorName: device.simulatorName)
+            setStatusBarPad(simulatorName: device.simulatorName, timeZone: timeZone)
         case .phone:
             switch device.homeStyle {
             case .indicator:
-                setStatusBarPhoneWithHomeIndicator(simulatorName: device.simulatorName)
+                setStatusBarPhoneWithHomeIndicator(simulatorName: device.simulatorName, timeZone: timeZone)
             default:
-                setStatusBarPhoneWithHomeButton(simulatorName: device.simulatorName)
+                setStatusBarPhoneWithHomeButton(simulatorName: device.simulatorName, timeZone: timeZone)
             }
         default:
             break
@@ -66,16 +66,16 @@ struct Simulator {
         let _ = try? Shell.call("xcrun simctl status_bar \(simulatorName.quoted()) clear")
     }
     
-    static func setStatusBarPhoneWithHomeButton(simulatorName: String) {
-        let _ = try? Shell.call("xcrun simctl status_bar \(simulatorName.quoted()) override --time \(defaultDateString.quoted()) --wifiBars 3 --cellularBars 4 --operatorName \"\"")
+    static func setStatusBarPhoneWithHomeButton(simulatorName: String, timeZone: String) {
+        let _ = try? Shell.call("xcrun simctl status_bar \(simulatorName.quoted()) override --time \(defaultDateString(timeZone: timeZone).quoted()) --wifiBars 3 --cellularBars 4 --operatorName \"\"")
     }
     
-    static func setStatusBarPhoneWithHomeIndicator(simulatorName: String) {
-        let _ = try? Shell.call("xcrun simctl status_bar \(simulatorName.quoted()) override --time \(defaultDateString.quoted()) --wifiBars 3 --cellularBars 4")
+    static func setStatusBarPhoneWithHomeIndicator(simulatorName: String, timeZone: String) {
+        let _ = try? Shell.call("xcrun simctl status_bar \(simulatorName.quoted()) override --time \(defaultDateString(timeZone: timeZone).quoted()) --wifiBars 3 --cellularBars 4")
     }
     
-    static func setStatusBarPad(simulatorName: String) {
-        let _ = try? Shell.call("xcrun simctl status_bar \(simulatorName.quoted()) override --time \(defaultDateString.quoted()) --wifiBars 3 --wifiMode active")
+    static func setStatusBarPad(simulatorName: String, timeZone: String) {
+        let _ = try? Shell.call("xcrun simctl status_bar \(simulatorName.quoted()) override --time \(defaultDateString(timeZone: timeZone).quoted()) --wifiBars 3 --wifiMode active")
         hideDate(simulatorName: simulatorName)
     }
     
