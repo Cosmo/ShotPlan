@@ -13,6 +13,7 @@ extension ShotPlan {
         let testPlan: String
         let devices: [Device]
         let localizeSimulator: Bool
+        let timeZone: String
     }
 }
 
@@ -20,6 +21,7 @@ extension ShotPlan.Configuration {
     static let defaultFileName: String = "ShotPlan.json"
     static let defaultSchemeName: String = "YOUR_SCHEME"
     static let defaultTestPlan: String = "YOUR_TESTPLAN"
+    static let defaultTimeZone: String = "America/Los_Angeles"
     static let defaultDevices: [Device] = [
         Device(simulatorName: "iPhone 11 Pro Max", displaySize: "6.5", homeStyle: .indicator),
         Device(simulatorName: "iPhone 8 Plus", displaySize: "5.5", homeStyle: .button),
@@ -29,8 +31,10 @@ extension ShotPlan.Configuration {
     
     static func defaultConfiguration(schemeName: String?, testPlan: String?) -> Self {
         return Self(scheme: schemeName ?? defaultSchemeName,
-                     testPlan: testPlan ?? defaultTestPlan,
-                    devices: defaultDevices, localizeSimulator: true)
+                    testPlan: testPlan ?? defaultTestPlan,
+                    devices: defaultDevices,
+                    localizeSimulator: true,
+                    timeZone: defaultTimeZone)
     }
     
     var data: Data {

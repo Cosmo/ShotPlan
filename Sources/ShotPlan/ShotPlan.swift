@@ -22,6 +22,9 @@ extension ShotPlan {
         @Option(name: .short, help: "Name of your Xcode Test Plan.")
         var testPlan: String?
         
+        @Option(name: .short, help: "TimeZone for Simulator.")
+        var timeZone: String?
+        
         mutating func run() {
             let configurationFromFile = try? Configuration.load()
             
@@ -31,18 +34,17 @@ extension ShotPlan {
             }
             
             guard let testPlan = testPlan ?? configurationFromFile?.testPlan else {
-                print("\(Configuration.defaultSchemeName) not found. Create a configuration by running 'shotplan init'")
+                print("\(Configuration.defaultTestPlan) not found. Create a configuration by running 'shotplan init'")
                 return
             }
             
             let devices = configurationFromFile?.devices ?? Configuration.defaultDevices
             
-            guard let localizeSimulator = configurationFromFile?.localizeSimulator else {
-                print("\(Configuration.defaultSchemeName) not found. Create a configuration by running 'shotplan init'")
-                return
-            }
+            let localizeSimulator = configurationFromFile?.localizeSimulator ?? true
             
-            let configuration = Configuration(scheme: schemeName, testPlan: testPlan, devices: devices, localizeSimulator: localizeSimulator)
+            let timeZone = timeZone ?? configurationFromFile?.timeZone ?? Configuration.defaultTimeZone
+            
+            let configuration = Configuration(scheme: schemeName, testPlan: testPlan, devices: devices, localizeSimulator: localizeSimulator, timeZone: timeZone)
             let targetFolder = Project.targetDirectoryURL.relativePath
             let derivedDataPath = Project.derivedDataDirectoryURL.relativePath
             
