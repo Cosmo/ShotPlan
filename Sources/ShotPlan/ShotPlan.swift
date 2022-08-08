@@ -5,8 +5,8 @@ import ArgumentParser
 struct ShotPlan: ParsableCommand {
     static var configuration = CommandConfiguration(
         abstract: "A utility creating automated screenshots with Xcode Test Plans.",
-        subcommands: [Init.self, Run.self, Debug.self],
-        defaultSubcommand: Run.self)
+        subcommands: [Init.self, Run.self, Info.self],
+        defaultSubcommand: Info.self)
     
     mutating func run() {
     }
@@ -103,6 +103,15 @@ extension ShotPlan {
     }
 }
 
+extension ShotPlan {
+    struct Info: ParsableCommand {
+        static var configuration = CommandConfiguration(abstract: "Shows you how to run this tool.")
+        
+        mutating func run() {
+            print("Call 'shotplan run' command to start creating screenshots.")
+        }
+    }
+}
 
 extension ShotPlan {
     struct Debug: ParsableCommand {

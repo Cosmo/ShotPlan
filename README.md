@@ -13,6 +13,14 @@ ShotPlan will also take care of the status bar in your screenshots.
 mint install Cosmo/ShotPlan@main
 ```
 
+## Requirements
+
+ShotPlan requires xcparse to be installed.
+
+```sh
+brew install chargepoint/xcparse/xcparse
+```
+
 ## Configuration
 
 Change to your Xcode project directory and run the `shotplan init` command to create a new configuration file.
